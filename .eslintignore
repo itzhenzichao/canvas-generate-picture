@@ -1,0 +1,12 @@
+lingdongliang-module/
+lingdongliang-module/**/*.css
+lingdongliang-module/**/*.js
+# 本地的文件名不是lingdongliang-module
+zhixin-frontend-lib/
+lingdongliang-module/
+zhixin-libs/**/*.js
+zhixin-libs/**/**/*.js
+zhixin-libs/
+zhixin-libs/libs/quiz/quizdetail/index.js
+zhixin-libs/libs/quiz/quizlist/index.js
+dist/

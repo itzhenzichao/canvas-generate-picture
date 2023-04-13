@@ -1,0 +1,8 @@
+@font-face {
+  /*给字体命名*/
+  font-family: 'FangZheng';
+  /*引入字体文件*/
+  src: url('./方正汉真广标简体.ttf');
+  font-weight: normal;
+  font-style: normal;
+}

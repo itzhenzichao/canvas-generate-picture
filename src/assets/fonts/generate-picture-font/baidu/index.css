@@ -1,0 +1,8 @@
+@font-face {
+  /*给字体命名*/
+  font-family: 'BaiDuZongYi';
+  /*引入字体文件*/
+  src: url('./百度综艺简体的副本.ttf');
+  font-weight: normal;
+  font-style: normal;
+}

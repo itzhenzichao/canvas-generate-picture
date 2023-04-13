@@ -1,0 +1,8 @@
+@font-face {
+  /*给字体命名*/
+  font-family: 'RuiZi';
+  /*引入字体文件*/
+  src: url('./锐字真言体.ttf');
+  font-weight: normal;
+  font-style: normal;
+}

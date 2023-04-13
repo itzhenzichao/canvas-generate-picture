@@ -1,0 +1,8 @@
+@font-face {
+  /*给字体命名*/
+  font-family: 'SourceHanSans';
+  /*引入字体文件*/
+  src: url('./SourceHanSansCN-Normal.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
