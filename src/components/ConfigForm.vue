@@ -40,6 +40,7 @@
             placeholder="请填写"
             :disabled="disabledStatus"
             v-model="form.width"
+            type="number"
             ><template slot="append">px</template></el-input
           >
         </el-form-item>
@@ -53,6 +54,7 @@
             placeholder="请填写"
             :disabled="disabledStatus"
             v-model="form.line_space"
+            type="number"
           ></el-input>
         </el-form-item>
         <el-form-item
@@ -65,6 +67,7 @@
             placeholder="请填写"
             :disabled="disabledStatus"
             v-model="form.line_num"
+            type="number"
           ></el-input>
         </el-form-item>
         <el-form-item label="排版:">
@@ -105,6 +108,7 @@
         <el-form-item label="字号" prop="font_size" :rules="form_rules">
           <el-input
             placeholder="请填写"
+            type="number"
             :disabled="disabledStatus"
             v-model="form.font_size"
             ><template slot="append">px</template></el-input
@@ -224,6 +228,8 @@ export default {
   display: flex;
   .item-line-label {
     padding: 0px 10px;
+    display: inline-block;
+    min-width: 40px;
   }
 }
 </style>

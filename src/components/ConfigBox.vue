@@ -105,6 +105,7 @@ export default {
     "teacher-config-form": TeacherConfigForm,
   },
   methods: {
+    // 保存
     saveConfig() {
       this.$message.success("控制台查看保存数据");
       console.log({
@@ -127,6 +128,7 @@ export default {
           return false;
         }
       }
+      // 所有表单校验完成后执行 预览功能支持部分表单绘制
       if (this.backNum === 0 && this.saveType === "preview") {
         this.preview();
       }
@@ -150,6 +152,7 @@ export default {
       this.removeCanvas();
       this.startCanvas();
     },
+    // 开始绘制 生成图片
     startCanvas() {
       this.imageLoading = true;
       // 绘制详情图
@@ -189,8 +192,8 @@ export default {
       this.executeNum = refName.length;
       this.backNum = refName.length;
       /*
-            保存表单组件 校验结果
-        */
+        保存表单组件 校验结果
+      */
       for (let i = 0; i < refName.length; i++) {
         this.$refs[refName[i]].save();
       }
@@ -267,10 +270,10 @@ export default {
   height: 100vh;
   overflow: hidden;
   .config-container {
-    width: 480px;
-    min-width: 480px;
-    border-right: 1px solid #e0e0e0;
-    padding: 10px 18px 58px 0px;
+    width: 500px;
+    min-width: 500px;
+    padding: 10px 18px 0px 0px;
+    margin-bottom: 58px;
     overflow-y: auto;
     overscroll-behavior: contain;
   }
@@ -282,6 +285,7 @@ export default {
     position: relative;
     overscroll-behavior: contain;
     text-align: center;
+    background: #e9e9e9;
     img {
       width: 90%;
     }
@@ -290,7 +294,7 @@ export default {
     position: fixed;
     bottom: 0px;
     background: white;
-    width: 472px;
+    width: 497px;
     padding: 10px;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;

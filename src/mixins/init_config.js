@@ -45,23 +45,23 @@ export default {
           teacher_group: [
             {
               imageConfig: {
-                x: "500",
-                y: "1375",
+                x: 500,
+                y: 1375,
               },
               nameConfig: {
-                x: "80",
-                y: "1350",
-                width: "200",
+                x: 80,
+                y: 1350,
+                width: 200,
                 font_family: "RuiZi",
                 font_size: 35,
                 font_color: "#547E99",
               },
               infoConfig: {
-                x: "80",
-                y: "1425",
-                width: "370",
-                line_space: "40",
-                line_num: "5",
+                x: 80,
+                y: 1425,
+                width: 370,
+                line_space: 40,
+                line_num: 5,
                 font_family: "BaiDuZongYi",
                 font_size: 25,
                 font_color: "#000000",

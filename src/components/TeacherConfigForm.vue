@@ -10,7 +10,7 @@
         >
           <el-divider>第{{ index + 1 }}位老师</el-divider>
           <!-- 头像 -->
-          <h5>头像</h5>
+          <h5 class="option-title">头像</h5>
           <div class="item-line">
             <el-form-item
               label="位置:"
@@ -48,7 +48,7 @@
             </el-form-item>
           </div>
           <!-- 姓名 -->
-          <h5>姓名</h5>
+          <h5 class="option-title">姓名</h5>
           <div>
             <div class="item-line">
               <el-form-item
@@ -95,6 +95,7 @@
                 placeholder="请填写"
                 :disabled="disabledStatus"
                 v-model="item.nameConfig.width"
+                type="number"
                 ><template slot="append">px</template></el-input
               >
             </el-form-item>
@@ -131,6 +132,7 @@
                 placeholder="请填写"
                 :disabled="disabledStatus"
                 v-model="item.nameConfig.font_size"
+                type="number"
                 ><template slot="append">px</template></el-input
               >
             </el-form-item>
@@ -148,7 +150,7 @@
             </el-form-item>
           </div>
           <!-- 介绍 -->
-          <h5>介绍</h5>
+          <h5 class="option-title">介绍</h5>
           <div>
             <div class="item-line">
               <el-form-item
@@ -195,6 +197,7 @@
                 placeholder="请填写"
                 :disabled="disabledStatus"
                 v-model="item.infoConfig.width"
+                type="number"
                 ><template slot="append">px</template></el-input
               >
             </el-form-item>
@@ -206,6 +209,7 @@
               <el-input
                 placeholder="请填写"
                 :disabled="disabledStatus"
+                type="number"
                 v-model="item.infoConfig.line_space"
               ></el-input>
             </el-form-item>
@@ -217,6 +221,7 @@
               <el-input
                 placeholder="请填写"
                 :disabled="disabledStatus"
+                type="number"
                 v-model="item.infoConfig.line_num"
               ></el-input>
             </el-form-item>
@@ -251,6 +256,7 @@
             >
               <el-input
                 placeholder="请填写"
+                type="number"
                 :disabled="disabledStatus"
                 v-model="item.infoConfig.font_size"
                 ><template slot="append">px</template></el-input
@@ -399,10 +405,15 @@ export default {
   display: flex;
   .item-line-label {
     padding: 0px 10px;
+    display: inline-block;
+    min-width: 40px;
   }
 }
 .teacher-group {
   padding: 0px 0px 10px 0px;
+  .option-title {
+    padding: 0px 0px 0px 10px;
+  }
 }
 .el-icon-info {
   font-size: 18px;

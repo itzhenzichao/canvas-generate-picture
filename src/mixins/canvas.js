@@ -37,25 +37,29 @@ export default {
           return false;
         }
         let that = this;
-        let font = Number(config.font_size);
+        let {
+          font_size,
+          font_color,
+          x,
+          y,
+          width,
+          line_num,
+          line_space,
+          font_family,
+          composing,
+        } = config;
         let text = config.text || "[2023春]第二轮光学进阶第4讲 反射折射";
-        that.classInfoCtx.font = `${font}px ${config.font_family}`;
-        that.classInfoCtx.fillStyle = config.font_color;
-        let startX = Number(config.x);
-        let startY = Number(config.y);
-        let draw_width = Number(config.width);
-        let lineNumber = Number(config.line_num);
-        let steps = Number(config.line_space);
-        let position = config.composing;
+        that.classInfoCtx.font = `${font_size}px ${font_family}`;
+        that.classInfoCtx.fillStyle = font_color;
         that.toFormateStr(
           that.classInfoCtx,
           text,
-          draw_width,
-          lineNumber,
-          startX,
-          font + startY,
-          steps,
-          position
+          width,
+          line_num,
+          x,
+          font_size + y,
+          line_space,
+          composing
         );
         resolve("success");
       });
@@ -68,26 +72,61 @@ export default {
           return false;
         }
         let that = this;
-        let font = Number(config.font_size);
+        let { font_size, font_color, x, y, width, font_family, composing } =
+          config;
         let text = config.text || "高一、高二、高三";
-        that.classInfoCtx.font = `${font}px ${config.font_family}`;
-        that.classInfoCtx.fillStyle = config.font_color;
-        let startX = Number(config.x);
-        let startY = Number(config.y);
-        let draw_width = Number(config.width);
-        let lineNumber = 1;
-        let steps = 1;
-        let position = config.composing;
+        that.classInfoCtx.font = `${font_size}px ${font_family}`;
+        that.classInfoCtx.fillStyle = font_color;
         that.toFormateStr(
           that.classInfoCtx,
           text,
-          draw_width,
-          lineNumber,
-          startX,
-          font + startY,
-          steps,
-          position
+          width,
+          1,
+          x,
+          font_size + y,
+          1,
+          composing
         );
+        resolve("success");
+      });
+    },
+    // 绘制课程大纲
+    addContentOutline(config) {
+      return new Promise((resolve) => {
+        if (!config) {
+          resolve("Not configured");
+          return false;
+        }
+        let subClassList = [];
+        // 没有配置课程大纲 用默认的
+        if (config.subclass) {
+          subClassList = config.subclass;
+        } else {
+          for (let i = 0; i < Number(config.line_num); i++) {
+            subClassList.push({
+              subject: "这是一个课程大纲的样例这是一个课程大纲的样例",
+            });
+          }
+        }
+        let that = this;
+        let { font_size, line_num, line_space, x, y, width } = config;
+        let position = config.composing;
+        that.classInfoCtx.font = `${font_size}px ${config.font_family}`;
+        that.classInfoCtx.fillStyle = config.font_color;
+        for (let i = 0; i < line_num; i++) {
+          if (subClassList[i]) {
+            that.toFormateStr(
+              that.classInfoCtx,
+              subClassList[i].subject,
+              width,
+              1,
+              x,
+              y + font_size + i * line_space,
+              font_size,
+              position
+            );
+          }
+        }
         resolve("success");
       });
     },
@@ -114,58 +153,18 @@ export default {
           if (!teacherInfoList[i]) {
             break;
           }
-          let teacherName = teacherInfoList[i].teacher_name;
-          let teacherinfo = teacherInfoList[i].formal_intro;
-          // 教师名字配置
-          let teacherNameFont = Number(teacherGroup[i].nameConfig.font_size);
-          let teacherNameX = Number(teacherGroup[i].nameConfig.x);
-          let teacherNameY = Number(teacherGroup[i].nameConfig.y);
-          let teacherNameWidth = Number(teacherGroup[i].nameConfig.width);
-          let teacherNameFamily = teacherGroup[i].nameConfig.font_family;
-          let teacherNameColor = teacherGroup[i].nameConfig.font_color;
-          // 教师介绍配置
-          let teacherInfoFont = Number(teacherGroup[i].infoConfig.font_size);
-          let teacherInfoX = Number(teacherGroup[i].infoConfig.x);
-          let teacherInfoY = Number(teacherGroup[i].infoConfig.y);
-          let teacherInfoWidth = Number(teacherGroup[i].infoConfig.width);
-          let teacherInfoLineNumber = Number(
-            teacherGroup[i].infoConfig.line_num
-          );
-          let teacherInfoSteps = Number(teacherGroup[i].infoConfig.line_space);
-          let teacherInfoFamily = teacherGroup[i].infoConfig.font_family;
-          let teacherInfoColor = teacherGroup[i].infoConfig.font_color;
-          // 教师图片配置
-          let teacherImgX = Number(teacherGroup[i].imageConfig.x);
-          let teacherImgY = Number(teacherGroup[i].imageConfig.y);
+          let { teacher_name, formal_intro } = teacherInfoList[i];
+          // 绘制详情老师名字
+          that.addTeacherName({ ...teacherGroup[i].nameConfig, teacher_name });
+          // 绘制详情教师介绍
+          that.addTeacherInfo({ ...teacherGroup[i].infoConfig, formal_intro });
+          // 绘制教师图片
           let img = new Image();
           img.src = teacherInfoList[i].random_teacher_mage;
           img.crossOrigin = "Anonymous";
           img.onload = function () {
-            that.classInfoCtx.drawImage(this, teacherImgX, teacherImgY);
-            that.classInfoCtx.font = `${teacherNameFont}px ${teacherNameFamily}`;
-            that.classInfoCtx.fillStyle = teacherNameColor;
-            that.toFormateStr(
-              that.classInfoCtx,
-              teacherName,
-              teacherNameWidth,
-              1,
-              teacherNameX,
-              teacherNameFont + teacherNameY,
-              teacherNameFont,
-              "left"
-            );
-            that.classInfoCtx.font = `${teacherInfoFont}px ${teacherInfoFamily}`;
-            that.classInfoCtx.fillStyle = teacherInfoColor;
-            that.toFormateStr(
-              that.classInfoCtx,
-              teacherinfo,
-              teacherInfoWidth,
-              teacherInfoLineNumber,
-              teacherInfoX,
-              teacherInfoFont + teacherInfoY,
-              teacherInfoSteps,
-              "left"
-            );
+            let { x, y } = teacherGroup[i].imageConfig;
+            that.classInfoCtx.drawImage(this, x, y);
             process++;
             if (process === teacherInfoList.length) {
               resolve("success");
@@ -174,50 +173,50 @@ export default {
         }
       });
     },
-    // 绘制课程大纲
-    addContentOutline(config) {
-      return new Promise((resolve) => {
-        if (!config) {
-          resolve("Not configured");
-          return false;
-        }
-        let subClassList = [];
-        // 没有配置课程大纲 用默认的
-        if (config.subclass) {
-          subClassList = config.subclass;
-        } else {
-          for (let i = 0; i < Number(config.line_num); i++) {
-            subClassList.push({
-              subject: "这是一个课程大纲的样例这是一个课程大纲的样例",
-            });
-          }
-        }
-        let that = this;
-        let font = Number(config.font_size);
-        let lineNumber = Number(config.line_num);
-        let steps = Number(config.line_space);
-        let startX = Number(config.x);
-        let startY = Number(config.y);
-        let draw_width = Number(config.width);
-        let position = config.composing;
-        that.classInfoCtx.font = `${font}px ${config.font_family}`;
-        that.classInfoCtx.fillStyle = config.font_color;
-        for (let i = 0; i < lineNumber; i++) {
-          if (subClassList[i]) {
-            that.toFormateStr(
-              that.classInfoCtx,
-              subClassList[i].subject,
-              draw_width,
-              1,
-              startX,
-              startY + font + i * steps,
-              font,
-              position
-            );
-          }
-        }
-        resolve("success");
-      });
+    // 绘制详情老师名字
+    addTeacherName(config) {
+      let that = this;
+      let { teacher_name, font_size, font_family, font_color, width, x, y } =
+        config;
+      that.classInfoCtx.font = `${font_size}px ${font_family}`;
+      that.classInfoCtx.fillStyle = font_color;
+      that.toFormateStr(
+        that.classInfoCtx,
+        teacher_name,
+        width,
+        1,
+        x,
+        font_size + y,
+        font_size,
+        "left"
+      );
+    },
+    // 绘制详情教师介绍
+    addTeacherInfo(config) {
+      let that = this;
+      let {
+        formal_intro,
+        font_size,
+        font_family,
+        font_color,
+        width,
+        x,
+        y,
+        line_num,
+        line_space,
+      } = config;
+      that.classInfoCtx.font = `${font_size}px ${font_family}`;
+      that.classInfoCtx.fillStyle = font_color;
+      that.toFormateStr(
+        that.classInfoCtx,
+        formal_intro,
+        width,
+        line_num,
+        x,
+        font_size + y,
+        line_space,
+        "left"
+      );
     },
     _calcMaxDimension(maxWidth, maxHeight, width, height) {
       // 700 和 500 是画布的最大宽高
@@ -225,7 +224,6 @@ export default {
       const hScaleFactor = maxHeight / height;
       let cssMaxWidth = Math.min(width, maxWidth);
       let cssMaxHeight = Math.min(height, maxHeight);
-      console.log("log", wScaleFactor, hScaleFactor);
       if (wScaleFactor < 1 && wScaleFactor < hScaleFactor) {
         cssMaxWidth = width * wScaleFactor;
         cssMaxHeight = height * wScaleFactor;
